@@ -1,14 +1,20 @@
 # Invoice-Ninja-Update
 Bash script for updates
 
+<b>Instructions</b>  
+
+Read disclaimer and notes below  
 Add update.sh file one directory above public_html  
 To run: bash update.sh  
-  
-Disclaimer: 
-Always do a full backup before running updates
-Script has not been tested in different environments
+
+<b>Disclaimer</b>  
+
+The script has not been tested in different environments  
+Always do a full backup of your installation before running any updates
+
  
-Notes:  
+<b>Notes</b>  
+
 The script assumes the Invoice Ninja files are directly inside public_html and not in a subfolder. If your public folder has a different name or you use a differnent folder structuree, update the script accordingly.  
   
   
