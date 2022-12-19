@@ -59,7 +59,7 @@ echo "Copying $version files..."
 rsync -a --recursive --exclude='update' --delete --force update/ public_html/    
 
 # Update config
-echo "Updating config and migrating..."
+echo "Updating config and clearing caches..."
 /usr/local/php81/bin/php-cli public_html/artisan clear-compiled
 /usr/local/php81/bin/php-cli public_html/artisan route:clear
 /usr/local/php81/bin/php-cli public_html/artisan view:clear
