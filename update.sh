@@ -47,6 +47,7 @@ mv invoiceninja.zip update/
 # Unzip the file
 echo "Extracting zip file, this can take while..."
 unzip -qq update/invoiceninja.zip -d update
+rm update/invoiceninja.zip
 
 # Copy the .env file and the public/storage folder to the update directory
 echo "Backing up config, logo and PDF files..."
