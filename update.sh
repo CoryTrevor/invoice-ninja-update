@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ### Update Invoice Ninja ###
 
 # Query GitHub for the latest release
