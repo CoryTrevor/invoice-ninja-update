@@ -1,5 +1,5 @@
-# Invoice-Ninja-Update
-Bash script for updates
+<h3>Invoice Ninja Update</h3>
+Bash script for updates to avoid PHP timeouts or using GitHub + Composer.
 
 <b>Disclaimer</b>  
 
