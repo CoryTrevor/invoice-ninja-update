@@ -1,5 +1,5 @@
 <h3>Invoice Ninja Updates</h3>
-A bash script for updates to avoid PHP timeouts and without using GitHub + Composer <br><br>
+A bash script for updates to avoid PHP timeout without having to use GitHub + Composer <br><br>
 
 <b>Disclaimer</b>  
 
