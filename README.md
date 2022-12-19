@@ -14,7 +14,7 @@ If your public folder has a different name or you use a different folder structu
   
   
 For the commands in the '# Update config' section it assumes PHP8.1 is in /usr/local/php81/bin/php-cli  
-This is necessary on my server as the default php-cli version is PHP7.4 but if your default is PHP8.1 then it could just use 'php' for those commands rather than specifying the PHP8.1 directory.
+Make sure to update that part with the PHP8.1 directory of your server or if the default php-cli is PHP8.1 then you could just use 'php' rather than specifying the directory.
   
 <b>Instructions</b>  
 
