@@ -53,15 +53,6 @@ echo "Backing up config, logo and PDF files..."
 cp public_html/.env update/
 cp -r public_html/public/storage update/public/
 
-# Remove public files and folders from public_html
-# rm -rf public_html/*
-# Remove hidden files and .github directory
-# find public_html -type f -name ".*" -delete
-# rm -rf public_html/.github
-# Copy folders and files to public_html
-#find update -maxdepth 1 ! -name update -type d -exec mv {} public_html/ \;
-#find update -maxdepth 1 ! -name update -type f -exec mv {} public_html/ \;
-
 # Copy folders and files from latest version to public_html, delete any obsolete files
 echo "Copying $version files..."
 rsync -a --recursive --exclude='update' --delete --force update/ public_html/    
