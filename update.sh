@@ -54,6 +54,12 @@ echo "Backing up config, logo and PDF files..."
 cp public_html/.env update/
 cp -r public_html/public/storage update/public/
 
+# Uncomment line below if you want to preserve the logs
+# cp -r public_html/storage/logs
+
+# Add any other folders/files that you'd like to keep as anything not contained in the latest release will be removed
+# cp -r public_html/foldertokeep
+
 # Copy folders and files from latest version to public_html, delete any obsolete files
 echo "Copying $version files..."
 rsync -a --recursive --exclude='update' --delete --force update/ public_html/    
