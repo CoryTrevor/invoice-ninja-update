@@ -66,6 +66,8 @@ rsync -a --recursive --exclude='update' --delete --force update/ public_html/
 
 # Update config
 echo "Updating config and clearing caches..."
+
+# If your php-cli version is 8.1 then you can just use 'php' in the lines below rather than '/usr/local/php81/bin/php-cli'
 /usr/local/php81/bin/php-cli public_html/artisan clear-compiled
 /usr/local/php81/bin/php-cli public_html/artisan route:clear
 /usr/local/php81/bin/php-cli public_html/artisan view:clear
