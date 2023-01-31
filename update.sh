@@ -64,6 +64,9 @@ cp -r public_html/public/storage update/public/
 echo "Copying $version files..."
 rsync -a --recursive --exclude='update' --delete --force update/ public_html/    
 
+# Uncomment the line below if you use snappdf
+# vendor/bin/snappdf download
+
 # Update config
 echo "Updating config and clearing caches..."
 
