@@ -57,8 +57,9 @@ cp -r public_html/public/storage update/public/
 # Uncomment the line below if you want to preserve the logs
 # cp -r public_html/storage/logs update/
 
-# Uncomment and edit the line below to add any other folders or files that you'd like to keep 
+# Uncomment and edit the lines below to add any other folders or files that you'd like to keep 
 # cp -r public_html/foldertokeep update/
+# cp public_html/filetokeep update/
 
 # Copy folders and files from latest version to public_html, delete any obsolete files
 echo "Copying $version files..."
