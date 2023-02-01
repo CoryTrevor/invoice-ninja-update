@@ -2,6 +2,19 @@
 
 ### Update Invoice Ninja ###
 
+###-------- Define Installation Variables --------###
+
+# Name of directory that Invoice Ninja installation is inside
+parent_dir='public_html'
+
+# Name of temp update directory
+update_dir='invoiceninja_temp_update'
+
+# If you need to specify a path for php-cli replace 'php' below with the path e.g. '/usr/local/php81/bin/php-cli'
+php_cli_cmd='php'
+
+###---------------- Begin Update ----------------###
+
 # Query GitHub for the latest release
 url=$(curl --fail -sL -o /dev/null -w %{url_effective} https://github.com/invoiceninja/invoiceninja/releases/latest)
 
@@ -16,7 +29,7 @@ fi
 version=$(echo "$url" | grep -oE '[^/]+$')
 
 # Check if the contents of VERSION.txt match the latest version number
-version_from_file=$(cat public_html/VERSION.txt)
+version_from_file=$(cat $parent_dir/VERSION.txt)
 version_from_file=$(echo "$version_from_file" | sed 's/^/v/')
 if [ "$version_from_file" = "$version" ]; then
   echo -e "Latest version already installed! \nInstalled version: $version_from_file \nLatest version: $version"
@@ -38,50 +51,48 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Create update directory
-mkdir -p update
+# Create temp update directory
+mkdir -p $update_dir
 
 # Move zip file
-mv invoiceninja.zip update/
+mv invoiceninja.zip $update_dir/
 
 # Unzip the file
 echo "Extracting zip file, this can take while..."
-unzip -qq update/invoiceninja.zip -d update
-rm update/invoiceninja.zip
+unzip -qq $update_dir/invoiceninja.zip -d $update_dir
+rm $update_dir/invoiceninja.zip
 
 # Copy the .env file, public/storage folder & snappdf to the update directory
-echo "Backing up config, logo and PDF files..."
-cp public_html/.env update/
-cp -r public_html/public/storage update/public/
-cp -r public_html/vendor/beganovich/snappdf/versions update/vendor/beganovich/snappdf/
+echo "Backing up config, logo, PDF files & snappdf versions"
+cp $parent_dir/.env $update_dir/
+cp -r $parent_dir/public/storage $update_dir/public/
+cp -r $parent_dir/vendor/beganovich/snappdf/versions $update_dir/vendor/beganovich/snappdf/
 
 # Uncomment the line below if you want to preserve the logs
-# cp -r public_html/storage/logs update/
+cp -r $parent_dir/storage/logs $update_dir/storage/
 
 # Uncomment and edit the lines below to add any other folders or files that you'd like to keep 
-# cp -r public_html/foldertokeep update/
-# cp public_html/filetokeep update/
+# cp -r $parent_dir/foldertokeep $update_dir/
+# cp $parent_dir/filetokeep $update_dir/
 
-# Copy folders and files from latest version to public_html, delete any obsolete files
+# Copy folders and files from latest version to $parent_dir, delete any obsolete files
 echo "Copying $version files..."
-rsync -a --recursive --exclude='update' --delete --force update/ public_html/    
+rsync -a --recursive --exclude='$update_dir' --delete --force $update_dir/ $parent_dir/    
 
 # Update config
 echo "Updating config and clearing caches..."
+$php_cli_cmd $parent_dir/artisan clear-compiled
+$php_cli_cmd $parent_dir/artisan route:clear
+$php_cli_cmd $parent_dir/artisan view:clear
+$php_cli_cmd $parent_dir/artisan migrate --force
+$php_cli_cmd $parent_dir/artisan optimize
 
-# If your php-cli version is 8.1 then you can just use 'php' in the lines below rather than '/usr/local/php81/bin/php-cli'
-/usr/local/php81/bin/php-cli public_html/artisan clear-compiled
-/usr/local/php81/bin/php-cli public_html/artisan route:clear
-/usr/local/php81/bin/php-cli public_html/artisan view:clear
-/usr/local/php81/bin/php-cli public_html/artisan migrate --force
-/usr/local/php81/bin/php-cli public_html/artisan optimize
-
-# Remove update folder
+# Remove temp update folder
 echo "Cleaning up temp update directory..."
-rm -rf update   
+rm -rf $update_dir   
 
 # Check if the contents of VERSION.txt match the latest version number
-check_version_from_file=$(cat public_html/VERSION.txt)
+check_version_from_file=$(cat $parent_dir/VERSION.txt)
 check_version_from_file=$(echo "$check_version_from_file" | sed 's/^/v/')
 if [ "$check_version_from_file" = "$version" ]; then
   echo -e "Invoice Ninja successfully updated! \nInstalled version: $check_version_from_file"
