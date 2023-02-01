@@ -68,7 +68,7 @@ cp $parent_dir/.env $update_dir/
 cp -r $parent_dir/public/storage $update_dir/public/
 cp -r $parent_dir/vendor/beganovich/snappdf/versions $update_dir/vendor/beganovich/snappdf/
 
-# Uncomment the line below if you want to preserve the logs
+# Comment out the line below if you don't want to preserve the logs
 cp -r $parent_dir/storage/logs $update_dir/storage/
 
 # Uncomment and edit the lines below to add any other folders or files that you'd like to keep 
