@@ -49,10 +49,11 @@ echo "Extracting zip file, this can take while..."
 unzip -qq update/invoiceninja.zip -d update
 rm update/invoiceninja.zip
 
-# Copy the .env file and the public/storage folder to the update directory
+# Copy the .env file, public/storage folder & snappdf to the update directory
 echo "Backing up config, logo and PDF files..."
 cp public_html/.env update/
 cp -r public_html/public/storage update/public/
+cp -r public_html/vendor/beganovich/snappdf/versions update/vendor/beganovich/snappdf/
 
 # Uncomment the line below if you want to preserve the logs
 # cp -r public_html/storage/logs update/
@@ -64,9 +65,6 @@ cp -r public_html/public/storage update/public/
 # Copy folders and files from latest version to public_html, delete any obsolete files
 echo "Copying $version files..."
 rsync -a --recursive --exclude='update' --delete --force update/ public_html/    
-
-# Uncomment the line below if you use snappdf
-# vendor/bin/snappdf download
 
 # Update config
 echo "Updating config and clearing caches..."
