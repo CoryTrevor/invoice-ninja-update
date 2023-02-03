@@ -10,7 +10,7 @@ parent_dir="public_html"
 # Name of temp update directory
 update_dir="invoiceninja_temp_update"
 
-# If you need to specify a path for php-cli replace 'php' below with the path e.g. '/usr/local/php81/bin/php-cli'
+# If you need to specify a path for php-cli replace "php" below with the path e.g. "/usr/local/php81/bin/php-cli"
 php_cli_cmd="php"
 
 ###---------------- Begin Update ----------------###
