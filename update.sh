@@ -5,13 +5,13 @@
 ###-------- Define Installation Variables --------###
 
 # Name of directory that Invoice Ninja installation is inside
-parent_dir='public_html'
+parent_dir="public_html"
 
 # Name of temp update directory
-update_dir='invoiceninja_temp_update'
+update_dir="invoiceninja_temp_update"
 
 # If you need to specify a path for php-cli replace 'php' below with the path e.g. '/usr/local/php81/bin/php-cli'
-php_cli_cmd='php'
+php_cli_cmd="php"
 
 ###---------------- Begin Update ----------------###
 
@@ -52,44 +52,45 @@ if [ $? -ne 0 ]; then
 fi
 
 # Create temp update directory
-mkdir -p $update_dir
+mkdir -p "$update_dir"
 
 # Move zip file
-mv invoiceninja.zip $update_dir/
+mv invoiceninja.zip "$update_dir/"
 
 # Unzip the file
 echo "Extracting zip file, this can take while..."
-unzip -qq $update_dir/invoiceninja.zip -d $update_dir
-rm $update_dir/invoiceninja.zip
+unzip -qq $update_dir/invoiceninja.zip -d "$update_dir"
+rm "$update_dir/invoiceninja.zip"
 
 # Copy the .env file, public/storage folder & snappdf to the update directory
 echo "Backing up config, logo, PDF files & snappdf versions"
-cp $parent_dir/.env $update_dir/
-cp -r $parent_dir/public/storage $update_dir/public/
-cp -r $parent_dir/vendor/beganovich/snappdf/versions $update_dir/vendor/beganovich/snappdf/
+cp "$parent_dir/.env" "$update_dir/"
+cp -r "$parent_dir/public/storage" "$update_dir/public/"
+cp -r "$parent_dir/vendor/beganovich/snappdf/versions" "$update_dir/vendor/beganovich/snappdf/"
 
 # Comment out the line below if you don't want to preserve the logs
-cp -r $parent_dir/storage/logs $update_dir/storage/
+cp -r "$parent_dir/storage/logs" "$update_dir/storage/"
 
 # Uncomment and edit the lines below to add any other folders or files that you'd like to keep 
-# cp -r $parent_dir/foldertokeep $update_dir/
-# cp $parent_dir/filetokeep $update_dir/
+# cp -r "$parent_dir/foldertokeep" "$update_dir/"
+# cp "$parent_dir/filetokeep" "$update_dir/"
 
 # Copy folders and files from latest version to $parent_dir, delete any obsolete files
 echo "Copying $version files..."
-rsync -a --recursive --exclude='$update_dir' --delete --force $update_dir/ $parent_dir/    
+rsync -a --recursive --exclude="$update_dir" --delete --force "$update_dir/" "$parent_dir/"
+
 
 # Update config
 echo "Updating config and clearing caches..."
-$php_cli_cmd $parent_dir/artisan clear-compiled
-$php_cli_cmd $parent_dir/artisan route:clear
-$php_cli_cmd $parent_dir/artisan view:clear
-$php_cli_cmd $parent_dir/artisan migrate --force
-$php_cli_cmd $parent_dir/artisan optimize
+$php_cli_cmd "$parent_dir/artisan" clear-compiled
+$php_cli_cmd "$parent_dir/artisan" route:clear
+$php_cli_cmd "$parent_dir/artisan" view:clear
+$php_cli_cmd "$parent_dir/artisan" migrate --force
+$php_cli_cmd "$parent_dir/artisan" optimize
 
 # Remove temp update folder
 echo "Cleaning up temp update directory..."
-rm -rf $update_dir   
+rm -rf "$update_dir"
 
 # Check if the contents of VERSION.txt match the latest version number
 check_version_from_file=$(cat $parent_dir/VERSION.txt)
