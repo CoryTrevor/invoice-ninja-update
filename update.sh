@@ -75,10 +75,14 @@ cp -r "$parent_dir/storage/logs" "$update_dir/storage/"
 # cp -r "$parent_dir/foldertokeep" "$update_dir/"
 # cp "$parent_dir/filetokeep" "$update_dir/"
 
-# Copy folders and files from latest version to $parent_dir, delete any obsolete files
-echo "Copying $version files..."
-rsync -a --recursive --exclude="$update_dir" --delete --force "$update_dir/" "$parent_dir/"
+# Replace the parent folder with the update folder 
+echo "Parent and update folder switcheroo..."
+renamed_parent="${parent_dir}_OLD"
+mv "$parent_dir" "$renamed_parent"
+mv "$update_dir" "$parent_dir"
 
+# Old rsync command kept here just for safe keeping 
+# rsync -a --recursive --exclude="$update_dir" --delete --force "$update_dir/" "$parent_dir/"
 
 # Update config
 echo "Updating config and clearing caches..."
@@ -89,8 +93,8 @@ $php_cli_cmd "$parent_dir/artisan" migrate --force
 $php_cli_cmd "$parent_dir/artisan" optimize
 
 # Remove temp update folder
-echo "Cleaning up temp update directory..."
-rm -rf "$update_dir"
+echo "Cleaning up old version files..."
+rm -rf "$renamed_parent"
 
 # Check if the contents of VERSION.txt match the latest version number
 check_version_from_file=$(cat $parent_dir/VERSION.txt)
