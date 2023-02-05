@@ -16,4 +16,4 @@ The script backs up .env, the logo image and PDFs in /public/storage, /storage/l
 
 Upload the update.sh file to the Invoice Ninja installation's parent directory i.e. not the directory that contains the Invoice Ninja files, the directory above it.
 
-To run: bash updateninja.sh  
+Run command: bash updateninja.sh  
