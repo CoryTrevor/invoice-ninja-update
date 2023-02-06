@@ -42,7 +42,7 @@ fi
 zip_url="https://github.com/invoiceninja/invoiceninja/releases/download/$version/invoiceninja.zip"
 
 # Download the release
-curl --fail -L --location-trusted -O "$zip_url" -o invoiceninja.zip
+curl --fail -L --location-trusted "$zip_url" -o invoiceninja.zip
 
 # Check if the curl command was successful
 if [ $? -ne 0 ]; then
