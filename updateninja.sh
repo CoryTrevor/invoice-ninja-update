@@ -42,7 +42,7 @@ fi
 tar_url="https://github.com/invoiceninja/invoiceninja/releases/download/$version/invoiceninja.tar"
 
 # Download the release
-curl --fail -L --location-trusted "$zip_url" -o invoiceninja.tar
+curl --fail -L --location-trusted "$tar_url" -o invoiceninja.tar
 
 # Check if the curl command was successful
 if [ $? -ne 0 ]; then
