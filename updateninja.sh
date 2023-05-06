@@ -2,6 +2,9 @@
 
 ### Update Invoice Ninja ###
 
+# Set the -euo pipefail option to exit immediately if any command fails or any undefined variable is used
+set -euo pipefail
+
 ###-------- Define Installation Variables --------###
 
 # Name of directory that Invoice Ninja installation is inside
