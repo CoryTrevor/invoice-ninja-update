@@ -86,10 +86,6 @@ renamed_parent="${parent_dir}_OLD"
 mv "$parent_dir" "$renamed_parent"
 mv "$update_dir" "$parent_dir"
 
-# Make sure web user owns all files
-# If running this script as root, uncomment the line below and replace 'webuser' with the user who owns the web application's files
-# chown -R webuser:webuser $parent_dir
-
 # Old rsync command kept here just for safe keeping 
 # rsync -a --recursive --exclude="$update_dir" --delete --force "$update_dir/" "$parent_dir/"
 
@@ -100,6 +96,10 @@ $php_cli_cmd "$parent_dir/artisan" route:clear
 $php_cli_cmd "$parent_dir/artisan" view:clear
 $php_cli_cmd "$parent_dir/artisan" migrate --force
 $php_cli_cmd "$parent_dir/artisan" optimize
+
+# Make sure web user owns all files
+# If running this script as root, uncomment the line below. Replace www-data with the user:group if a different user owns the web application's files
+# chown -R www-data:www-data $parent_dir
 
 # Remove temp update folder
 echo "Cleaning up old version files..."
