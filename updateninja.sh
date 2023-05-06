@@ -83,6 +83,10 @@ renamed_parent="${parent_dir}_OLD"
 mv "$parent_dir" "$renamed_parent"
 mv "$update_dir" "$parent_dir"
 
+# Make sure web user owns all files
+# If running this script as root, uncomment the line below and replace 'webuser' with the user who owns the web application's files
+# chown -R webuser:webuser $parent_dir
+
 # Old rsync command kept here just for safe keeping 
 # rsync -a --recursive --exclude="$update_dir" --delete --force "$update_dir/" "$parent_dir/"
 
