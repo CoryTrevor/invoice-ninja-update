@@ -67,8 +67,8 @@ tar xf $update_dir/invoiceninja.tar -C "$update_dir" > /dev/null
 
 rm "$update_dir/invoiceninja.tar"
 
-# Copy the .env file, public/storage folder & snappdf to the update directory
-echo "Backing up config, htaccesss, logo, PDF files & snappdf versions"
+# Copy the .env file, .htaccess file, public/storage folder & snappdf to the update directory
+echo "Backing up config, htaccess, logo, PDF files & snappdf versions"
 cp "$parent_dir/.env" "$update_dir/"
 cp "$parent_dir/.htaccess" "$update_dir/"
 cp -r "$parent_dir/public/storage" "$update_dir/public/"
