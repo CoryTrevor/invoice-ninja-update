@@ -41,11 +41,11 @@ else
   echo "Downloading latest release $version"
 fi
 
-# Construct the download URL for the tar file
-tar_url="https://github.com/invoiceninja/invoiceninja/releases/download/$version/invoiceninja.tar"
+# Construct the download URL for the zip file
+zip_url="https://github.com/invoiceninja/invoiceninja/releases/download/$version/invoiceninja.zip"
 
 # Download the release
-curl --fail -L --location-trusted "$tar_url" -o invoiceninja.tar
+curl --fail -L --location-trusted "$zip_url" -o invoiceninja.zip
 
 # Check if the curl command was successful
 if [ $? -ne 0 ]; then
@@ -57,20 +57,19 @@ fi
 # Create temp update directory
 mkdir -p "$update_dir"
 
-# Move tar file
-mv invoiceninja.tar "$update_dir/"
+# Move zip file
+mv invoiceninja.zip "$update_dir/"
 
-# Extract the tar file
-echo "Extracting tar file, this can take while..."
-# unzip -qq $update_dir/invoiceninja.zip -d "$update_dir"
-tar xf $update_dir/invoiceninja.tar -C "$update_dir" > /dev/null
+# Unzip the file
+echo "Extracting zip file, this can take while..."
+unzip -qq $update_dir/invoiceninja.zip -d "$update_dir"
 
-rm "$update_dir/invoiceninja.tar"
+# Delete zip file
+rm "$update_dir/invoiceninja.zip"
 
-# Copy the .env file, .htaccess file, public/storage folder & snappdf to the update directory
-echo "Backing up config, htaccess, logo, PDF files & snappdf versions"
+# Copy the .env file, public/storage folder & snappdf to the update directory
+echo "Backing up config, logo, PDF files & snappdf versions"
 cp "$parent_dir/.env" "$update_dir/"
-cp "$parent_dir/.htaccess" "$update_dir/"
 cp -r "$parent_dir/public/storage" "$update_dir/public/"
 cp -r "$parent_dir/vendor/beganovich/snappdf/versions" "$update_dir/vendor/beganovich/snappdf/"
 
@@ -97,6 +96,9 @@ $php_cli_cmd "$parent_dir/artisan" route:clear
 $php_cli_cmd "$parent_dir/artisan" view:clear
 $php_cli_cmd "$parent_dir/artisan" migrate --force
 $php_cli_cmd "$parent_dir/artisan" optimize
+
+# Prevent .env from public download
+chmod 600 $parent_dir/.env
 
 # Make sure web user owns all files
 # If running this script as root, uncomment the line below. Replace www-data with the user:group if a different user owns the web application's files
