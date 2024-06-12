@@ -13,7 +13,7 @@ parent_dir="public_html"
 # Name of temp update directory
 update_dir="invoiceninja_temp_update"
 
-# If you need to specify a path for php-cli replace "php" below with the path e.g. "/usr/local/php81/bin/php-cli"
+# If you need to specify a path for php-cli replace "php" below with the path e.g. "/usr/local/php82/bin/php-cli"
 php_cli_cmd="php"
 
 ###---------------- Begin Update ----------------###
@@ -41,11 +41,11 @@ else
   echo "Downloading latest release $version"
 fi
 
-# Construct the download URL for the zip file
-zip_url="https://github.com/invoiceninja/invoiceninja/releases/download/$version/invoiceninja.zip"
+# Construct the download URL for the tar file
+tar_url="https://github.com/invoiceninja/invoiceninja/releases/download/$version/invoiceninja.tar"
 
 # Download the release
-curl --fail -L --location-trusted "$zip_url" -o invoiceninja.zip
+curl --fail -L --location-trusted "$tar_url" -o invoiceninja.tar
 
 # Check if the curl command was successful
 if [ $? -ne 0 ]; then
@@ -54,18 +54,20 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+sleep 1
+
 # Create temp update directory
 mkdir -p "$update_dir"
 
-# Move zip file
-mv invoiceninja.zip "$update_dir/"
+# Move tar file
+mv invoiceninja.tar "$update_dir/"
 
-# Unzip the file
-echo "Extracting zip file, this can take while..."
-unzip -qq $update_dir/invoiceninja.zip -d "$update_dir"
+# Extract the tar file
+echo -e "\nExtracting tar file, this can take while..."
+tar xf $update_dir/invoiceninja.tar -C "$update_dir" > /dev/null
 
-# Delete zip file
-rm "$update_dir/invoiceninja.zip"
+# Delete tar file
+rm "$update_dir/invoiceninja.tar"
 
 # Copy the .env file, public/storage folder & snappdf to the update directory
 echo "Backing up config, logo, PDF files & snappdf versions"
