@@ -97,7 +97,9 @@ $php_cli_cmd "$parent_dir/artisan" clear-compiled
 $php_cli_cmd "$parent_dir/artisan" route:clear
 $php_cli_cmd "$parent_dir/artisan" view:clear
 $php_cli_cmd "$parent_dir/artisan" migrate --force
-$php_cli_cmd "$parent_dir/artisan" optimize
+$php_cli_cmd "$parent_dir/artisan" config:clear
+$php_cli_cmd "$parent_dir/artisan" cache:clear
+#$php_cli_cmd "$parent_dir/artisan" optimize
 
 # Protect .env from public download
 chmod 600 $parent_dir/.env
