@@ -91,6 +91,9 @@ mv "$update_dir" "$parent_dir"
 # Old rsync command kept here just for safe keeping 
 # rsync -a --recursive --exclude="$update_dir" --delete --force "$update_dir/" "$parent_dir/"
 
+# Add this folder to prevent cache clear permissions error
+mkdir -p "$parent_dir/storage/framework/cache/data"
+
 # Update config
 echo "Updating config and clearing caches..."
 $php_cli_cmd "$parent_dir/artisan" clear-compiled
